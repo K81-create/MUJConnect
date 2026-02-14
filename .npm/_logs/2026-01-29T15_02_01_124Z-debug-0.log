@@ -1,0 +1,115 @@
+0 verbose cli C:\Program Files\nodejs\node.exe C:\Program Files\nodejs\node_modules\npm\bin\npm-cli.js
+1 info using npm@10.9.3
+2 info using node@v22.20.0
+3 silly config load:file:C:\Program Files\nodejs\node_modules\npm\npmrc
+4 silly config load:file:C:\Users\khushi\OneDrive\Desktop\ecom project\.npmrc
+5 silly config load:file:C:\Users\khushi\.npmrc
+6 silly config load:file:C:\Users\khushi\AppData\Roaming\npm\etc\npmrc
+7 verbose title npm install
+8 verbose argv "install" "--cache" ".npm" "--prefer-offline" "false"
+9 verbose logfile logs-max:10 dir:C:\Users\khushi\OneDrive\Desktop\ecom project\.npm\_logs\2026-01-29T15_02_01_124Z-
+10 verbose logfile C:\Users\khushi\OneDrive\Desktop\ecom project\.npm\_logs\2026-01-29T15_02_01_124Z-debug-0.log
+11 silly logfile done cleaning log files
+12 http fetch GET https://registry.npmjs.org/npm attempt 1 failed with ECONNREFUSED
+13 silly packumentCache heap:2197815296 maxSize:549453824 maxEntrySize:274726912
+14 silly idealTree buildDeps
+15 silly fetch manifest @radix-ui/react-alert-dialog@^1.0.5
+16 silly packumentCache full:https://registry.npmjs.org/@radix-ui%2freact-alert-dialog cache-miss
+17 silly fetch manifest @radix-ui/react-dialog@^1.0.5
+18 silly packumentCache full:https://registry.npmjs.org/@radix-ui%2freact-dialog cache-miss
+19 silly fetch manifest @radix-ui/react-icons@^1.3.0
+20 silly packumentCache full:https://registry.npmjs.org/@radix-ui%2freact-icons cache-miss
+21 silly fetch manifest @radix-ui/react-tabs@^1.0.4
+22 silly packumentCache full:https://registry.npmjs.org/@radix-ui%2freact-tabs cache-miss
+23 silly fetch manifest @radix-ui/react-slot@^1.0.2
+24 silly packumentCache full:https://registry.npmjs.org/@radix-ui%2freact-slot cache-miss
+25 silly fetch manifest class-variance-authority@^0.7.0
+26 silly packumentCache full:https://registry.npmjs.org/class-variance-authority cache-miss
+27 silly fetch manifest date-fns@^3.6.0
+28 silly packumentCache full:https://registry.npmjs.org/date-fns cache-miss
+29 silly fetch manifest lucide-react@^0.460.0
+30 silly packumentCache full:https://registry.npmjs.org/lucide-react cache-miss
+31 silly fetch manifest react@^18.3.1
+32 silly packumentCache full:https://registry.npmjs.org/react cache-miss
+33 silly fetch manifest react-day-picker@^9.3.0
+34 silly packumentCache full:https://registry.npmjs.org/react-day-picker cache-miss
+35 silly fetch manifest react-dom@^18.3.1
+36 silly packumentCache full:https://registry.npmjs.org/react-dom cache-miss
+37 silly fetch manifest react-router-dom@^6.28.0
+38 silly packumentCache full:https://registry.npmjs.org/react-router-dom cache-miss
+39 silly fetch manifest tailwind-merge@^2.5.0
+40 silly packumentCache full:https://registry.npmjs.org/tailwind-merge cache-miss
+41 silly fetch manifest @types/react@^18.3.10
+42 silly packumentCache full:https://registry.npmjs.org/@types%2freact cache-miss
+43 silly fetch manifest @types/react-dom@^18.3.0
+44 silly packumentCache full:https://registry.npmjs.org/@types%2freact-dom cache-miss
+45 silly fetch manifest @typescript-eslint/eslint-plugin@^8.0.1
+46 silly packumentCache full:https://registry.npmjs.org/@typescript-eslint%2feslint-plugin cache-miss
+47 silly fetch manifest @typescript-eslint/parser@^8.0.1
+48 silly packumentCache full:https://registry.npmjs.org/@typescript-eslint%2fparser cache-miss
+49 silly fetch manifest @vitejs/plugin-react-swc@^3.7.0
+50 silly packumentCache full:https://registry.npmjs.org/@vitejs%2fplugin-react-swc cache-miss
+51 silly fetch manifest autoprefixer@^10.4.20
+52 silly packumentCache full:https://registry.npmjs.org/autoprefixer cache-miss
+53 silly fetch manifest eslint@^9.14.0
+54 silly packumentCache full:https://registry.npmjs.org/eslint cache-miss
+55 silly fetch manifest eslint-plugin-react-hooks@^5.0.0
+56 silly packumentCache full:https://registry.npmjs.org/eslint-plugin-react-hooks cache-miss
+57 silly fetch manifest eslint-plugin-react-refresh@^0.4.14
+58 silly packumentCache full:https://registry.npmjs.org/eslint-plugin-react-refresh cache-miss
+59 silly fetch manifest postcss@^8.4.49
+60 silly packumentCache full:https://registry.npmjs.org/postcss cache-miss
+61 silly fetch manifest tailwindcss@^3.4.15
+62 silly packumentCache full:https://registry.npmjs.org/tailwindcss cache-miss
+63 silly fetch manifest typescript@^5.6.3
+64 silly packumentCache full:https://registry.npmjs.org/typescript cache-miss
+65 silly fetch manifest vite@^6.0.0
+66 silly packumentCache full:https://registry.npmjs.org/vite cache-miss
+67 silly placeDep ROOT @radix-ui/react-alert-dialog@ OK for: urban-home-services@1.0.0 want: ^1.0.5
+68 silly placeDep ROOT @radix-ui/react-dialog@ OK for: urban-home-services@1.0.0 want: ^1.0.5
+69 silly placeDep ROOT @radix-ui/react-icons@ OK for: urban-home-services@1.0.0 want: ^1.3.0
+70 silly placeDep ROOT @radix-ui/react-slot@ OK for: urban-home-services@1.0.0 want: ^1.0.2
+71 silly placeDep ROOT @radix-ui/react-tabs@ OK for: urban-home-services@1.0.0 want: ^1.0.4
+72 silly placeDep ROOT @types/react@ OK for: urban-home-services@1.0.0 want: ^18.3.10
+73 silly placeDep ROOT @types/react-dom@ OK for: urban-home-services@1.0.0 want: ^18.3.0
+74 silly placeDep ROOT @typescript-eslint/eslint-plugin@ OK for: urban-home-services@1.0.0 want: ^8.0.1
+75 silly placeDep ROOT @typescript-eslint/parser@ OK for: urban-home-services@1.0.0 want: ^8.0.1
+76 silly placeDep ROOT @vitejs/plugin-react-swc@ OK for: urban-home-services@1.0.0 want: ^3.7.0
+77 silly placeDep ROOT autoprefixer@ OK for: urban-home-services@1.0.0 want: ^10.4.20
+78 silly placeDep ROOT class-variance-authority@ OK for: urban-home-services@1.0.0 want: ^0.7.0
+79 silly placeDep ROOT date-fns@ OK for: urban-home-services@1.0.0 want: ^3.6.0
+80 silly placeDep ROOT eslint@ OK for: urban-home-services@1.0.0 want: ^9.14.0
+81 silly placeDep ROOT eslint-plugin-react-hooks@ OK for: urban-home-services@1.0.0 want: ^5.0.0
+82 silly placeDep ROOT eslint-plugin-react-refresh@ OK for: urban-home-services@1.0.0 want: ^0.4.14
+83 silly placeDep ROOT lucide-react@ OK for: urban-home-services@1.0.0 want: ^0.460.0
+84 silly placeDep ROOT postcss@ OK for: urban-home-services@1.0.0 want: ^8.4.49
+85 silly placeDep ROOT react@ OK for: urban-home-services@1.0.0 want: ^18.3.1
+86 silly placeDep ROOT react-day-picker@ OK for: urban-home-services@1.0.0 want: ^9.3.0
+87 silly placeDep ROOT react-dom@ OK for: urban-home-services@1.0.0 want: ^18.3.1
+88 silly placeDep ROOT react-router-dom@ OK for: urban-home-services@1.0.0 want: ^6.28.0
+89 silly placeDep ROOT tailwind-merge@ OK for: urban-home-services@1.0.0 want: ^2.5.0
+90 silly placeDep ROOT tailwindcss@ OK for: urban-home-services@1.0.0 want: ^3.4.15
+91 silly placeDep ROOT typescript@ OK for: urban-home-services@1.0.0 want: ^5.6.3
+92 silly placeDep ROOT vite@ OK for: urban-home-services@1.0.0 want: ^6.0.0
+93 verbose stack Error: request to https://registry.npmjs.org/@radix-ui%2freact-alert-dialog failed: cache mode is 'only-if-cached' but no cached response is available.
+93 verbose stack     at cacheFetch (C:\Program Files\nodejs\node_modules\npm\node_modules\make-fetch-happen\lib\cache\index.js:12:13)
+93 verbose stack     at async fetch (C:\Program Files\nodejs\node_modules\npm\node_modules\make-fetch-happen\lib\fetch.js:98:7)
+93 verbose stack     at async RegistryFetcher.packument (C:\Program Files\nodejs\node_modules\npm\node_modules\pacote\lib\registry.js:90:19)
+93 verbose stack     at async RegistryFetcher.manifest (C:\Program Files\nodejs\node_modules\npm\node_modules\pacote\lib\registry.js:128:23)
+93 verbose stack     at async #fetchManifest (C:\Program Files\nodejs\node_modules\npm\node_modules\@npmcli\arborist\lib\arborist\build-ideal-tree.js:1202:20)
+93 verbose stack     at async #nodeFromEdge (C:\Program Files\nodejs\node_modules\npm\node_modules\@npmcli\arborist\lib\arborist\build-ideal-tree.js:1040:19)
+93 verbose stack     at async #buildDepStep (C:\Program Files\nodejs\node_modules\npm\node_modules\@npmcli\arborist\lib\arborist\build-ideal-tree.js:904:11)
+93 verbose stack     at async Arborist.buildIdealTree (C:\Program Files\nodejs\node_modules\npm\node_modules\@npmcli\arborist\lib\arborist\build-ideal-tree.js:181:7)
+93 verbose stack     at async Promise.all (index 1)
+93 verbose stack     at async Arborist.reify (C:\Program Files\nodejs\node_modules\npm\node_modules\@npmcli\arborist\lib\arborist\reify.js:131:5)
+94 error code ENOTCACHED
+95 error request to https://registry.npmjs.org/@radix-ui%2freact-alert-dialog failed: cache mode is 'only-if-cached' but no cached response is available.
+96 silly unfinished npm timer reify 1769698922216
+97 silly unfinished npm timer reify:loadTrees 1769698922217
+98 verbose cwd C:\Users\khushi\OneDrive\Desktop\ecom project
+99 verbose os Windows_NT 10.0.22631
+100 verbose node v22.20.0
+101 verbose npm  v10.9.3
+102 verbose exit 1
+103 verbose code 1
+104 error A complete log of this run can be found in: C:\Users\khushi\OneDrive\Desktop\ecom project\.npm\_logs\2026-01-29T15_02_01_124Z-debug-0.log
