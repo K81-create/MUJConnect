@@ -1,38 +1,45 @@
-# --- Environment files ---
-.env
-server/.env
-client/.env
-.env.local
-.env.*.local
-
-# --- Node ---
+# Dependencies
 node_modules/
+.pnp
+.pnp.js
+
+# Testing
+coverage/
+
+# Production
+build/
+dist/
+out/
+
+# Environment Variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+server/.env
+
+# Logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
-.npm/
-
-# --- Build outputs ---
-dist/
-build/
-out/
-coverage/
-
-# --- Logs ---
-logs/
+logs
 *.log
 
-# --- OS files ---
+# IDEs and Editors
+.vscode/
+.idea/
+*.suo
+*.ntvs
+*.njsproj
+*.sln
+*.sw?
+
+# OS Files
 .DS_Store
 Thumbs.db
 
-# --- Editor files ---
-.vscode/
-.idea/
-
-# --- Optional ---
+# Secrets
 *.pem
 *.key
-node_modules
-dist
