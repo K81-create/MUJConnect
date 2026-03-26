@@ -101,8 +101,8 @@ Uses React Context API (`BookingContext`) for:
 ## License
 
 MIT
+>>>>>>> 1b18d69 (Initial commit)
 =======
 # MUJConnect
 A Localized Home Services Booking and Tracking Platform.
 >>>>>>> 76aafb2db5ce267a34aa550db75163f2e7b7b250
->>>>>>> 1b18d69 (Initial commit)
