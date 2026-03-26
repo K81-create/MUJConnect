@@ -10,7 +10,7 @@ import { Booking } from './models/Booking';
 import { ProviderProfile } from './models/ProviderProfile';
 
 // Load env vars
-dotenv.config();
+dotenv.config({ path: __dirname + "/../.env" });
 
 import locationRoutes from './routes/location';
 

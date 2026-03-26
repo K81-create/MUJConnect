@@ -9,6 +9,7 @@ import { format } from "date-fns";
 import { useEffect, useState } from "react";
 import { socket } from "@/lib/socket";
 import { fetchBookings, fetchUserBookings } from "@/api/client";
+import { useNavigate } from "react-router-dom";
 import { BackgroundSlideshow } from "@/components/ui/BackgroundSlideshow";
 import bgCleaning from "@/assests/bg-cleaning.jpg.jpg";
 import bgRepair from "@/assests/bg-repair.jpg.jpg";
@@ -19,7 +20,9 @@ export function UserDashboard() {
     const { user, logout } = useAuth();
     const [bookings, setBookings] = useState<any[]>([]);
     // const [trackingBookingId, setTrackingBookingId] = useState<string | null>(null); // Unused now
+    const navigate = useNavigate();
     const backgroundImages = [bgCleaning, bgRepair, bgSalon];
+
 
     useEffect(() => {
         if (!user?.id) return;
@@ -60,7 +63,31 @@ export function UserDashboard() {
                         <h1 className="text-3xl font-bold text-white">Welcome back, {user?.name}</h1>
                         <p className="text-gray-200">Manage your bookings and profile</p>
                     </div>
-                    <Button variant="outline" onClick={logout}>Sign Out</Button>
+                    <div className="flex items-center gap-3">
+
+                        {/* 💬 Chat Button */}
+                        <button
+                            onClick={() => navigate("/chatbot")}
+                            style={{
+                                borderRadius: "50%",
+                                width: "45px",
+                                height: "45px",
+                                fontSize: "20px",
+                                backgroundColor: "#4CAF50",
+                                color: "white",
+                                border: "none",
+                                cursor: "pointer"
+                            }}
+                        >
+                            💬
+                        </button>
+
+                        {/* 🔓 Sign Out */}
+                        <Button variant="outline" onClick={logout}>
+                            Sign Out
+                        </Button>
+
+                    </div>
                 </div>
 
                 <div className="grid md:grid-cols-3 gap-6">
@@ -262,6 +289,9 @@ export function UserDashboard() {
                     </TabsContent>
                 </Tabs>
             </div>
+
+
         </div>
+
     );
 }

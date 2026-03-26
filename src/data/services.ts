@@ -70,7 +70,7 @@ export const services: Service[] = [
     reviewCount: 2156,
     category: "cleaning",
     image: "https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=800&q=80"
-,
+    ,
     addOns: [
       {
         id: "a4",
@@ -174,5 +174,39 @@ export const services: Service[] = [
     reviewCount: 756,
     category: "repair",
     image: "🔧"
+  }
+  ,
+  {
+    id: "9",
+    name: "Home Painting",
+    description: "Professional home painting service. Interior and exterior.",
+    price: 4999,
+    duration: 480,
+    rating: 4.7,
+    reviewCount: 342,
+    category: "painting",
+    image: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    id: "10",
+    name: "Pest Control",
+    description: "Complete pest control solution for your home.",
+    price: 999,
+    duration: 60,
+    rating: 4.8,
+    reviewCount: 567,
+    category: "pest-control",
+    image: "https://images.unsplash.com/photo-1585664811087-47f651336423?auto=format&fit=crop&w=800&q=80"
+  },
+  {
+    id: "11",
+    name: "Water Tank Cleaning",
+    description: "Mechanized water tank cleaning and disinfection.",
+    price: 799,
+    duration: 90,
+    rating: 4.9,
+    reviewCount: 231,
+    category: "water-tank",
+    image: "https://images.unsplash.com/photo-1621905252507-b35492cc74b4?auto=format&fit=crop&w=800&q=80"
   }
 ];

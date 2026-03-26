@@ -607,6 +607,153 @@ const services = [
         reviewCount: 300,
         category: "water-tank",
         image: "https://images.unsplash.com/photo-1617182283995-236b3595563a?auto=format&fit=crop&w=800&q=80"
+    },
+
+    // --- NEW ADDITIONS ---
+    // Women's Salon Extras
+    {
+        id: "women-facial-gold",
+        name: "Gold Facial",
+        description: "Premium gold radiance facial.",
+        price: 1499,
+        duration: 60,
+        rating: 4.8,
+        reviewCount: 400,
+        category: "women",
+        image: "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+        id: "women-facial-diamond",
+        name: "Diamond Facial",
+        description: "Luxury diamond skin polishing facial.",
+        price: 1999,
+        duration: 75,
+        rating: 4.9,
+        reviewCount: 250,
+        category: "women",
+        image: "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=800&q=80"
+    },
+
+    // Men's Salon Extras
+    {
+        id: "mens-hair-color-premium",
+        name: "Premium Hair Color",
+        description: "Ammonia-free premium brand color.",
+        price: 1499,
+        duration: 60,
+        rating: 4.8,
+        reviewCount: 150,
+        category: "men",
+        image: "https://images.unsplash.com/photo-1621605815971-fbc98d665033?auto=format&fit=crop&w=800&q=80"
+    },
+
+    // Repair Extras
+    {
+        id: "repair-chimney",
+        name: "Chimney Cleaning & Repair",
+        description: "Deep cleaning and motor repair.",
+        price: 599,
+        duration: 60,
+        rating: 4.7,
+        reviewCount: 300,
+        category: "repair",
+        image: "https://images.unsplash.com/photo-1581091870627-3c8caa4a6b56?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+        id: "repair-mixer",
+        name: "Mixer Grinder Repair",
+        description: "Jar and motor repair.",
+        price: 249,
+        duration: 30,
+        rating: 4.6,
+        reviewCount: 200,
+        category: "repair",
+        image: "https://images.unsplash.com/photo-1581091870627-3c8caa4a6b56?auto=format&fit=crop&w=800&q=80"
+    },
+
+    // Cleaning Extras
+    {
+        id: "clean-mattress",
+        name: "Mattress Cleaning",
+        description: "Dust mite and stain removal.",
+        price: 699,
+        duration: 60,
+        rating: 4.8,
+        reviewCount: 400,
+        category: "cleaning",
+        image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+        id: "clean-car",
+        name: "Car Interior Cleaning",
+        description: "Deep vacuum and seat shampooing.",
+        price: 999,
+        duration: 90,
+        rating: 4.7,
+        reviewCount: 350,
+        category: "cleaning",
+        image: "https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=800&q=80"
+    },
+
+    // Painting Extras
+    {
+        id: "paint-texture",
+        name: "Texture Painting",
+        description: "Designer wall texture painting (per wall).",
+        price: 2999,
+        duration: 240,
+        rating: 4.8,
+        reviewCount: 150,
+        category: "painting",
+        image: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+        id: "paint-stencil",
+        name: "Stencil Painting",
+        description: "Artistic stencil designs (per wall).",
+        price: 1999,
+        duration: 180,
+        rating: 4.7,
+        reviewCount: 120,
+        category: "painting",
+        image: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&w=800&q=80"
+    },
+
+    // Pest Control Extras
+    {
+        id: "pest-bedbug",
+        name: "Bed Bug Control",
+        description: "Heat and chemical treatment for bed bugs.",
+        price: 1499,
+        duration: 90,
+        rating: 4.8,
+        reviewCount: 300,
+        category: "pest-control",
+        image: "https://images.unsplash.com/photo-1587373752528-77e8df6ff8f8?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+        id: "pest-mosquito",
+        name: "Mosquito Control",
+        description: "Fogging and larvicide treatment.",
+        price: 599,
+        duration: 45,
+        rating: 4.7,
+        reviewCount: 500,
+        category: "pest-control",
+        image: "https://images.unsplash.com/photo-1587373752528-77e8df6ff8f8?auto=format&fit=crop&w=800&q=80"
+    },
+
+    // Water Tank Extras
+    {
+        id: "water-sump",
+        name: "Sump Cleaning",
+        description: "Underground sump de-watering and cleaning.",
+        price: 1299,
+        duration: 90,
+        rating: 4.7,
+        reviewCount: 250,
+        category: "water-tank",
+        image: "https://images.unsplash.com/photo-1617182283995-236b3595563a?auto=format&fit=crop&w=800&q=80"
     }
 ];
 

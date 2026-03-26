@@ -29,13 +29,19 @@ const bookingSchema = new mongoose.Schema(
       default: "pending",
     },
     assignedProvider: { type: String }, // Stores provider name
+    providerPhone: { type: String, default: "1234567890" }, // Phone for Calling
     providerLocation: {
       lat: Number,
       lng: Number,
       eta: String, // e.g. "15 mins"
       address: String, // Manual location address
       lastUpdated: Date
-    }
+    },
+    messages: [{
+      sender: { type: String, enum: ["user", "provider"], required: true },
+      text: { type: String, required: true },
+      timestamp: { type: Date, default: Date.now }
+    }]
   },
   { timestamps: true }
 );

@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Clock, Star, Check } from "lucide-react";
 import { Button } from "../components/ui/button";
 import { useBooking } from "../context/booking-context";
-import { services } from "../data/services";
-import { AddOn } from "../types";
+import { fetchServiceById } from "../api/client";
+import { Service, AddOn } from "../types";
 import { ServiceVariants } from "../components/service/ServiceVariants";
 
 export function ServiceDetailsPage() {
@@ -12,8 +12,27 @@ export function ServiceDetailsPage() {
   const navigate = useNavigate();
   const { addToCart } = useBooking();
   const [selectedAddOns, setSelectedAddOns] = useState<AddOn[]>([]);
+  const [service, setService] = useState<Service | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  const service = services.find((s) => s.id === serviceId);
+  useEffect(() => {
+    const loadService = async () => {
+      if (!serviceId) return;
+      try {
+        const data = await fetchServiceById(serviceId);
+        setService(data);
+      } catch (error) {
+        console.error("Failed to fetch service:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadService();
+  }, [serviceId]);
+
+  if (loading) {
+    return <div className="p-10 text-center">Loading...</div>;
+  }
 
   if (!service) {
     return (
@@ -24,12 +43,12 @@ export function ServiceDetailsPage() {
   }
 
   if (service.id === 'deep-house-cleaning') {
-  return (
-    <div className="p-10 text-center">
-      Deep House Cleaning variants page
-    </div>
-  );
-}
+    return (
+      <div className="p-10 text-center">
+        Deep House Cleaning variants page
+      </div>
+    );
+  }
 
 
   const toggleAddOn = (addOn: AddOn) => {
@@ -102,8 +121,8 @@ export function ServiceDetailsPage() {
                       key={addOn.id}
                       onClick={() => toggleAddOn(addOn)}
                       className={`w-full rounded-xl border p-4 text-left transition-all ${isSelected
-                          ? "border-primary bg-primary/5"
-                          : "border-slate-200 bg-white hover:border-slate-300"
+                        ? "border-primary bg-primary/5"
+                        : "border-slate-200 bg-white hover:border-slate-300"
                         }`}
                     >
                       <div className="flex items-start justify-between">
@@ -111,8 +130,8 @@ export function ServiceDetailsPage() {
                           <div className="flex items-center gap-2">
                             <div
                               className={`flex h-5 w-5 items-center justify-center rounded border ${isSelected
-                                  ? "border-primary bg-primary"
-                                  : "border-slate-300"
+                                ? "border-primary bg-primary"
+                                : "border-slate-300"
                                 }`}
                             >
                               {isSelected && (

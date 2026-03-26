@@ -20,6 +20,7 @@ import { format } from "date-fns";
 import { ServiceRegistrationForm } from "@/components/dashboard/ServiceRegistrationForm";
 import { EditProfileDialog } from "@/components/dashboard/EditProfileDialog";
 import ProviderLocationControl from "@/components/provider/ProviderLocationControl";
+import ProviderChat from "@/components/provider/ProviderChat";
 
 import { socket } from "@/lib/socket";
 
@@ -611,9 +612,9 @@ export function StakeholderDashboard() {
                         <p className="text-gray-500">No active jobs assigned yet.</p>
                     ) : (
                         bookingsToDisplay.map((req) => (
-                            <Card key={req.id || req._id}>
-                                <CardContent className="flex justify-between items-center p-6">
-                                    <div>
+                            <Card key={req.id || req._id} className="relative overflow-hidden">
+                                <CardContent className="flex flex-col xl:flex-row justify-between items-start xl:items-center p-6 gap-6">
+                                    <div className="flex-1 w-full xl:w-auto">
                                         <h3 className="font-bold text-lg">
                                             {req.items?.map((i: any) => i.service?.name || i.serviceName).join(", ")}
                                         </h3>
@@ -642,8 +643,8 @@ export function StakeholderDashboard() {
                                         </p>
                                     </div>
 
-                                    {/* ACTION BUTTONS */}
-                                    <div className="flex gap-2">
+                                    {/* ACTION BUTTONS & CHAT/LOCATION DASHBOARD */}
+                                    <div className="w-full flex flex-col items-end gap-3 mt-4 lg:mt-0 xl:w-auto">
                                         {req.status === "assigned" && (
                                             <Button
                                                 className="bg-purple-600 hover:bg-purple-700"
@@ -656,17 +657,21 @@ export function StakeholderDashboard() {
                                         )}
 
                                         {req.status === "in-progress" && (
-                                            <div className="flex gap-2 flex-col md:flex-row">
-                                                <ProviderLocationControl bookingId={req.id || req._id || ""} />
+                                            <div className="flex flex-col gap-4 mt-4 bg-gray-50/50 p-4 rounded-xl w-full col-span-full xl:col-span-2 shadow-inner border border-gray-100">
+                                                <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
+                                                    <ProviderLocationControl bookingId={req.id || req._id || ""} />
+                                                    <ProviderChat bookingId={req.id || req._id || ""} />
+                                                </div>
+
                                                 <Button
-                                                    className="bg-green-600 hover:bg-green-700 h-full"
+                                                    className="bg-green-600 hover:bg-green-700 w-full xl:w-1/2 self-end mt-2 h-12 text-lg shadow-md"
                                                     onClick={() =>
                                                         handleAction(req.id || req._id || "", "completed")
                                                     }
                                                 >
-                                                    Complete Job
+                                                    <CheckCircle className="w-5 h-5 mr-3" />
+                                                    Job Complete & Stop Sharing
                                                 </Button>
-
                                             </div>
                                         )}
                                         {req.status === "completed" && (

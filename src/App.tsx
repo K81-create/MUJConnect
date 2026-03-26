@@ -4,6 +4,8 @@ import { AuthProvider } from "./context/auth-context";
 import { BookingProvider } from "./context/booking-context";
 import { AppLayout } from "./components/layout/AppLayout";
 import { ProtectedRoute } from "./components/auth/ProtectedRoute";
+import Chatbot from "./components/Chatbot";
+import ChatbotPage from "./pages/ChatbotPage";
 
 // Pages
 import { LandingPage } from "./pages/LandingPage";
@@ -36,6 +38,7 @@ function App() {
             {/* Protected User Routes */}
             <Route element={<ProtectedRoute allowedRoles={['user']} />}>
               <Route path="/user/dashboard" element={<UserDashboard />} />
+              <Route path="/chatbot" element={<ChatbotPage />} />
               <Route path="/checkout" element={<CheckoutPage />} />
               <Route path="/booking-confirmed" element={<BookingConfirmedPage />} />
 

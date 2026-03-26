@@ -9,6 +9,14 @@ export const fetchServices = async () => {
     return response.json();
 };
 
+export const fetchServiceById = async (id: string) => {
+    const response = await fetch(`${API_URL}/services/${id}`);
+    if (!response.ok) {
+        throw new Error('Failed to fetch service');
+    }
+    return response.json();
+};
+
 export const fetchCategories = async () => {
     const response = await fetch(`${API_URL}/categories`);
     if (!response.ok) {

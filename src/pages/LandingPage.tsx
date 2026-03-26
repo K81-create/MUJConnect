@@ -96,12 +96,11 @@ export function LandingPage() {
                             <CheckCircle2 className="w-5 h-5 text-green-600" />
                             Secure Payments
                         </div>
-                        <div className="flex items-center gap-2">
-                            <CheckCircle2 className="w-5 h-5 text-green-600" />
-                            24/7 Support
-                        </div>
                     </div>
+
+
                 </div>
+
 
                 {/* RIGHT (Service Cards) */}
                 <div className="grid grid-cols-2 gap-5">
@@ -135,24 +134,6 @@ export function LandingPage() {
                         <p className="text-sm text-slate-500 mt-1">
                             AC, fridge, washing machine.
                         </p>
-                    </div>
-                </div>
-            </div>
-
-            {/* Stats Section */}
-            <div className="relative z-10 max-w-7xl mx-auto px-6 pb-16">
-                <div className="bg-white/70 backdrop-blur-xl border border-white/40 rounded-2xl shadow-lg p-8 grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
-                    <div>
-                        <h2 className="text-3xl font-bold text-slate-900">5000+</h2>
-                        <p className="text-slate-500 mt-1">Successful Bookings</p>
-                    </div>
-                    <div>
-                        <h2 className="text-3xl font-bold text-slate-900">1000+</h2>
-                        <p className="text-slate-500 mt-1">Service Providers</p>
-                    </div>
-                    <div>
-                        <h2 className="text-3xl font-bold text-slate-900">4.8★</h2>
-                        <p className="text-slate-500 mt-1">Average Rating</p>
                     </div>
                 </div>
             </div>

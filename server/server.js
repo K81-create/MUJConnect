@@ -1,6 +1,7 @@
 import express from "express";
 import http from "http";
 import dns from "dns";
+import fetch from "node-fetch";
 
 // Set DNS server to Google Public DNS to resolve SRV record issues
 dns.setServers(["8.8.8.8", "8.8.4.4"]);
@@ -36,6 +37,64 @@ app.get("/api/services", async (req, res) => {
         res.json(services);
     } catch (err) {
         res.status(500).json({ message: err.message });
+    }
+});
+
+// ✅ API route for single service
+app.get("/api/services/:id", async (req, res) => {
+    try {
+        const service = await Service.findOne({ id: req.params.id });
+        if (!service) return res.status(404).json({ message: "Service not found" });
+        res.json(service);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
+
+app.post("/api/chat", async (req, res) => {
+    console.log("✅ /api/chat HIT");
+    const userMessage = req.body.message;
+
+    try {
+        const response = await fetch("https://api.openai.com/v1/chat/completions", {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                model: "gpt-4o-mini",
+                messages: [
+                    {
+                        role: "system",
+                        content: "You are an assistant for a service app. Suggest services like cleaning, plumbing, electrician, salon."
+                    },
+                    {
+                        role: "user",
+                        content: userMessage
+                    }
+                ]
+            })
+        });
+
+        const data = await response.json();
+
+        // 🔥 ADD THIS (VERY IMPORTANT)
+        console.log("OPENAI RESPONSE:", data);
+
+        if (!response.ok) {
+            console.error("❌ OpenAI Error:", data);
+            return res.status(500).json({ error: "AI failed" });
+        }
+
+        const reply = data.choices[0].message.content;
+
+        res.json({ reply });
+
+    } catch (err) {
+        console.error("❌ Server Error:", err);
+        res.status(500).json({ error: "Chatbot error" });
     }
 });
 
@@ -99,6 +158,31 @@ io.on("connection", (socket) => {
         }
     });
 
+    // Chat Message System
+    socket.on("join_tracking", (bookingId) => {
+        socket.join(`tracking_${bookingId}`);
+        console.log(`User joined tracking room: tracking_${bookingId}`);
+    });
+
+    socket.on("send_message", async ({ bookingId, sender, text }) => {
+        try {
+            const message = { sender, text, timestamp: new Date() };
+
+            // Save to DB
+            const updatedBooking = await Booking.findByIdAndUpdate(
+                bookingId,
+                { $push: { messages: message } },
+                { new: true }
+            );
+
+            // Broadcast back to the room
+            io.to(`tracking_${bookingId}`).emit("receive_message", message);
+            console.log(`💬 Message sent in tracking_${bookingId}:`, message);
+        } catch (e) {
+            console.error("Error sending message:", e);
+        }
+    });
+
     // Relay job updates (for manual emits from frontend)
     socket.on("job_updated", (data) => {
         io.emit("job_updated", data);
@@ -117,8 +201,10 @@ io.on("connection", (socket) => {
                         lastUpdated: new Date()
                     }
                 });
+                // Ensure provider broadcasts to their specific room too, so users on tracking screen don't listen to all providers
+                io.to(`tracking_${data.bookingId}`).emit("providerLocationUpdate", data);
             }
-            socket.broadcast.emit("providerLocationUpdate", data); // Keep broadcasting
+            socket.broadcast.emit("providerLocationUpdate", data); // Keep broadcasting global
         } catch (e) {
             console.error("Error saving location:", e);
         }

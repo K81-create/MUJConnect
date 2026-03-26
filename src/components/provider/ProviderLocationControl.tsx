@@ -96,7 +96,11 @@ const ProviderLocationControl: React.FC<Props> = ({ bookingId }) => {
                 return;
             }
 
-            const res = await fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(manualAddress)}.json?access_token=${token}`);
+            const searchAddress = manualAddress.toLowerCase().includes('india')
+                ? manualAddress
+                : `${manualAddress}, India`;
+
+            const res = await fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(searchAddress)}.json?access_token=${token}&country=in`);
             const data = await res.json();
 
             if (data.features && data.features.length > 0) {
