@@ -8,6 +8,7 @@ import { Service } from './models/Service';
 import { Category } from './models/Category';
 import { Booking } from './models/Booking';
 import { ProviderProfile } from './models/ProviderProfile';
+import ProviderApplication from "./models/providerapplication.js";
 
 // Load env vars
 dotenv.config({ path: __dirname + "/../.env" });
@@ -232,6 +233,7 @@ app.post('/api/seed', async (req, res) => {
 
 // Register as Provider
 app.post('/api/provider/register', async (req, res) => {
+
     try {
         const existing = await ProviderProfile.findOne({ email: req.body.email });
         if (existing) {
@@ -297,6 +299,51 @@ app.get('/api/bookings/provider/:name', async (req, res) => {
 // --- LOCATION ROUTES ---
 app.use('/api/location', locationRoutes);
 
+// --- CHATBOT PROVIDER SEARCH ROUTE ---
+app.post("/api/providers", async (req, res) => {
+    console.log("API HIT ✅", req.body);
+    const { service } = req.body;
+
+    if (!service) {
+    return res.status(400).json({ message: "Service is required" });
+}
+
+    try {
+        const keywords = service.toLowerCase().split(" ");
+
+        const providers = await ProviderApplication.find({
+            status: "approved",
+
+            $or: [
+                {
+                    serviceCategory: { $regex: service, $options: "i" }
+                },
+                {
+                    services: {
+                        $elemMatch: {
+                            name: { $regex: keywords.join(".*"), $options: "i" }
+                        }
+                    }
+                }
+            ]
+        });
+
+        // 🔹 Format data (IMPORTANT)
+        const formatted = providers.map(p => ({
+            name: p.personalDetails.name,
+            phone: p.personalDetails.phone,
+            category: p.serviceCategory,
+            services: p.services,
+            experience: p.experience,
+            area: p.serviceArea
+        }));
+
+        res.json({ providers: formatted });
+
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
 // --- ADMIN ROUTES ---
 
 // Get Pending Requests

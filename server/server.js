@@ -10,6 +10,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import Service from "./models/Service.js";
 import Booking from "./models/Booking.js";
+import ProviderApplication from "./models/ProviderApplication.js";
 import cors from "cors";
 
 
@@ -104,7 +105,50 @@ app.post("/api/chat", async (req, res) => {
 import bookingRoutes from "./routes/bookingroutes.js";
 app.use("/api/bookings", bookingRoutes);
 
-// Socket.IO
+// --- CHATBOT PROVIDER SEARCH ROUTE ---
+app.post("/api/providers", async (req, res) => {
+    console.log("API HIT ✅ /api/providers", req.body);
+    const { service } = req.body;
+
+    if (!service) {
+        return res.status(400).json({ message: "Service is required" });
+    }
+
+    try {
+        const keywords = service.toLowerCase().split(" ");
+
+        const providers = await ProviderApplication.find({
+            status: "approved",
+            $or: [
+                {
+                    serviceCategory: { $regex: service, $options: "i" }
+                },
+                {
+                    services: {
+                        $elemMatch: {
+                            name: { $regex: keywords.join(".*"), $options: "i" }
+                        }
+                    }
+                }
+            ]
+        });
+
+        const formatted = providers.map((p) => ({
+            name: p.personalDetails?.name || "Unknown Provider",
+            phone: p.personalDetails?.phone || "N/A",
+            category: p.serviceCategory || "N/A",
+            services: p.services || [],
+            experience: p.experience || "N/A",
+            area: p.serviceArea || "N/A",
+        }));
+
+        res.json({ providers: formatted });
+    } catch (err) {
+        console.error("Error in /api/providers:", err);
+        res.status(500).json({ error: "Failed to fetch providers" });
+    }
+});
+
 // Socket.IO
 import providerRoutes from "./routes/providerRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
