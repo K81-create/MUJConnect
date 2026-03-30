@@ -112,9 +112,17 @@ export function StakeholderDashboard() {
     useEffect(() => {
         console.log("Setting up socket listeners. Profile:", profile?.personalDetails?.name);
 
-        socket.on('connect', () => {
-            console.log("Socket connected:", socket.id);
-        });
+        const registerProvider = () => {
+             console.log("Socket connected/registering:", socket.id, profile?.personalDetails?.name);
+             if (profile?.personalDetails?.name) {
+                 socket.emit("register_provider", profile.personalDetails.name);
+             }
+        };
+
+        socket.on('connect', registerProvider);
+        if (socket.connected) {
+            registerProvider();
+        }
 
         socket.on('provider_status_update', (updatedProfile: ProviderProfile) => {
             console.log("Received provider_status_update:", updatedProfile);
@@ -181,10 +189,23 @@ export function StakeholderDashboard() {
     }, [profile?.status]);
 
     useEffect(() => {
+        if ("Notification" in window && Notification.permission !== "granted" && Notification.permission !== "denied") {
+            Notification.requestPermission();
+        }
+
         socket.on('new_booking', (booking: any) => {
             console.log("New booking received:", booking);
             // Optionally filter by service category
             setPendingBookings(prev => [booking, ...prev]);
+
+            if ("Notification" in window && Notification.permission === "granted") {
+                const title = "New Job Available!";
+                const text = `A new ${booking.service?.name || booking.serviceName || "service"} request was just posted.`;
+                new Notification(title, {
+                    body: text,
+                    icon: "/vite.svg" 
+                });
+            }
         });
 
         socket.on('job_updated', (updatedBooking: any) => {

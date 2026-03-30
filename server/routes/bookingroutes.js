@@ -1,5 +1,6 @@
 import express from "express";
 import Booking from "../models/Booking.js";
+import { io, providers } from "../server.js";
 
 const router = express.Router();
 
@@ -128,9 +129,34 @@ router.put("/:id/assign", async (req, res) => {
 // ✅ POST create booking
 router.post("/", async (req, res) => {
     try {
-        const booking = await Booking.create(req.body);
+        const { userId, providerName, service } = req.body;
+
+        // ✅ Create booking (ONLY ONCE)
+        const booking = await Booking.create({
+            userId,
+            providerName,
+            service,
+            ...req.body
+        });
+
+        // 🔔 SEND REAL-TIME NOTIFICATION
+        if (providerName && providers[providerName]) {
+            const providerSocket = providers[providerName];
+            io.to(providerSocket).emit("new_booking", booking);
+            console.log("✅ Notification sent to:", providerName);
+        } else if (providerName) {
+            console.log("⚠️ Provider not online:", providerName);
+            // Still broadcast it so others might pick it up, or maybe handle explicitly?
+            io.emit("new_booking", booking);
+        } else {
+            console.log("📢 Broadcasted unassigned booking to marketplace");
+            io.emit("new_booking", booking);
+        }
+
         res.status(201).json(booking);
+
     } catch (err) {
+        console.error("Booking error:", err);
         res.status(400).json({ message: err.message });
     }
 });
