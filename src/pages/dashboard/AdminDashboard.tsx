@@ -85,7 +85,8 @@ export function AdminDashboard() {
                     setBookings(prev => prev.map(b => b._id === bookingId ? updatedBooking : b));
                     // Socket broadcast from server will handle other clients, we update local state immediately
                 } else {
-                    alert("Failed to assign provider");
+                    const errData = await res.json();
+                    alert(errData.message || "Failed to assign provider");
                 }
             } catch (e) {
                 console.error(e);
@@ -165,7 +166,7 @@ export function AdminDashboard() {
                 <Card>
                     <CardHeader>
                         <CardTitle className="flex items-center gap-2">
-                            <Activity className="w-5 h-5 text-blue-600" /> Active Operations
+                            <Activity className="w-5 h-5 text-blue-600" /> Total Operations
                         </CardTitle>
                     </CardHeader>
                     <CardContent>

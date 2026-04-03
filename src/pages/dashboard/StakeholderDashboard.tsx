@@ -21,6 +21,7 @@ import { ServiceRegistrationForm } from "@/components/dashboard/ServiceRegistrat
 import { EditProfileDialog } from "@/components/dashboard/EditProfileDialog";
 import ProviderLocationControl from "@/components/provider/ProviderLocationControl";
 import ProviderChat from "@/components/provider/ProviderChat";
+import { PauseServiceDialog } from "@/components/dashboard/PauseServiceDialog";
 
 import { socket } from "@/lib/socket";
 
@@ -51,6 +52,8 @@ interface ProviderProfile {
     services: ServiceItem[];
     experience: number;
     serviceArea: string;
+    pauseStartDate?: string | null;
+    pauseEndDate?: string | null;
 }
 
 export function StakeholderDashboard() {
@@ -61,6 +64,7 @@ export function StakeholderDashboard() {
     // Registration / Profile State
     const [profile, setProfile] = useState<ProviderProfile | null>(null);
     const [isLoadingProfile, setIsLoadingProfile] = useState(true);
+    const [showPauseDialog, setShowPauseDialog] = useState(false);
 
     const [services, setServices] = useState<ServiceItem[]>([]);
 
@@ -194,6 +198,8 @@ export function StakeholderDashboard() {
         }
 
         socket.on('new_booking', (booking: any) => {
+            if (!profile?.isAvailable) return;
+            
             console.log("New booking received:", booking);
             // Optionally filter by service category
             setPendingBookings(prev => [booking, ...prev]);
@@ -379,6 +385,26 @@ export function StakeholderDashboard() {
         }
     }
 
+    const handleSchedulePause = async (startDate: string, endDate: string) => {
+        if (!profile) return;
+        try {
+            const res = await fetch(`http://localhost:5000/api/provider/pause-service`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ providerId: profile._id, startDate, endDate })
+            });
+            if (res.ok) {
+                const updated = await res.json();
+                setProfile(updated);
+            } else {
+                alert("Failed to schedule pause.");
+            }
+        } catch (e) {
+            console.error(e);
+            alert("Network error. Please try again.");
+        }
+    };
+
     const handleProfileUpdate = async (updatedData: any) => {
         if (!profile) return;
         try {
@@ -492,19 +518,35 @@ export function StakeholderDashboard() {
                     <p className="text-gray-500">Manage your services and business</p>
                 </div>
                 <div className="flex items-center gap-4">
-                    <div className="flex items-center gap-2 bg-gray-50 px-3 py-2 rounded-lg border">
-                        <span className="text-sm font-medium text-gray-600">Availability</span>
-                        <button
-                            onClick={toggleAvailability}
-                            className={`
-                                w-10 h-6 flex items-center rounded-full p-1 transition-colors duration-200 ease-in-out
-                                ${profile.isAvailable ? 'bg-green-500 justify-end' : 'bg-gray-300 justify-start'}
-                            `}
-                        >
-                            <div className="w-4 h-4 rounded-full bg-white shadow-sm" />
-                        </button>
+                    <div className="flex flex-col gap-2 items-end">
+                        <div className="flex items-center gap-4 bg-white p-2 px-3 rounded-xl border shadow-sm">
+                            <div className="flex flex-col text-right mr-2">
+                                <span className={`text-sm font-bold ${profile.isAvailable ? 'text-green-600' : 'text-red-600'}`}>
+                                    {profile.isAvailable ? 'Active' : 'Paused'}
+                                </span>
+                                {!profile.isAvailable && profile.pauseEndDate && (
+                                    <span className="text-xs text-gray-500 font-medium">
+                                        Until {format(new Date(profile.pauseEndDate), "MMM d, yy")}
+                                    </span>
+                                )}
+                            </div>
+                            <button
+                                onClick={toggleAvailability}
+                                className={`
+                                    w-10 h-6 flex items-center rounded-full p-1 transition-colors duration-200 ease-in-out
+                                    ${profile.isAvailable ? 'bg-green-500 justify-end' : 'bg-gray-300 justify-start'}
+                                `}
+                            >
+                                <div className="w-4 h-4 rounded-full bg-white shadow-sm" />
+                            </button>
+                        </div>
+                        {profile.isAvailable && (
+                            <Button variant="outline" size="sm" onClick={() => setShowPauseDialog(true)} className="h-7 text-xs px-2 shadow-sm">
+                                Schedule Pause
+                            </Button>
+                        )}
                     </div>
-                    <Button variant="outline" onClick={logout}>
+                    <Button variant="outline" onClick={logout} className="ml-2">
                         Sign Out
                     </Button>
                 </div>
@@ -599,7 +641,13 @@ export function StakeholderDashboard() {
                             <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
                             New Opportunities
                         </h2>
-                        {pendingBookings.length === 0 ? (
+                        {!profile.isAvailable ? (
+                            <div className="bg-orange-50 border border-orange-100 p-6 rounded-xl text-center">
+                                <p className="text-orange-800 font-medium tracking-wide">
+                                    Your profile is currently paused. Resume your availability to view and accept new jobs.
+                                </p>
+                            </div>
+                        ) : pendingBookings.length === 0 ? (
                             <p className="text-gray-500 italic">No new jobs available at the moment.</p>
                         ) : (
                             pendingBookings.map((req) => (
@@ -760,6 +808,11 @@ export function StakeholderDashboard() {
                     </div>
                 </TabsContent>
             </Tabs>
+            <PauseServiceDialog 
+                open={showPauseDialog} 
+                onOpenChange={setShowPauseDialog} 
+                onConfirm={handleSchedulePause} 
+            />
         </div >
     );
 }

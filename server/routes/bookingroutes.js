@@ -108,11 +108,40 @@ router.get("/provider/:name", async (req, res) => {
     }
 });
 
+import ProviderApplication from "../models/ProviderApplication.js";
+
 // ✅ PUT assign booking (Provider accepts job)
 router.put("/:id/assign", async (req, res) => {
     try {
         const { providerName } = req.body;
         console.log(`[PUT] Assigning booking ${req.params.id} to ${providerName}`);
+
+        // --- NEW VALIDATION: Prevent assigning to a paused provider ---
+        const bookingToAssign = await Booking.findById(req.params.id);
+        if (!bookingToAssign) return res.status(404).json({ message: "Booking not found" });
+
+        const provider = await ProviderApplication.findOne({ 'personalDetails.name': providerName });
+        if (!provider) {
+            return res.status(404).json({ message: "Provider not found" });
+        }
+
+        let active = provider.isAvailable;
+        const bookingDate = new Date(bookingToAssign.date);
+
+        // evaluate schedule override specifically for the booking date
+        if (provider.isAvailable && provider.pauseStartDate && provider.pauseEndDate) {
+            if (bookingDate >= provider.pauseStartDate && bookingDate <= provider.pauseEndDate) {
+                active = false;
+            }
+        } else if (!provider.isAvailable && provider.pauseEndDate && bookingDate > provider.pauseEndDate) {
+            active = true;
+        }
+
+        if (!active) {
+             return res.status(400).json({ message: `Cannot assign: Provider '${providerName}' is currently paused and unavailable on this date.` });
+        }
+        // -------------------------------------------------------------
+
         const booking = await Booking.findByIdAndUpdate(
             req.params.id,
             { status: "assigned", assignedProvider: providerName },
@@ -126,10 +155,45 @@ router.put("/:id/assign", async (req, res) => {
     }
 });
 
+
+
 // ✅ POST create booking
 router.post("/", async (req, res) => {
     try {
         const { userId, providerName, service } = req.body;
+
+        // Check if there are ANY available and approved providers in the platform
+        // If the user tried to select a specific one, check that one, otherwise check globally
+        let providerQuery = { status: "approved" };
+        if (providerName) {
+            providerQuery['personalDetails.name'] = providerName;
+        }
+
+        const availableProviders = await ProviderApplication.find(providerQuery);
+        
+        let hasActive = false;
+        const now = new Date();
+        for (const p of availableProviders) {
+            let active = p.isAvailable;
+            // evaluate schedule override
+            if (p.isAvailable && p.pauseStartDate && p.pauseEndDate) {
+                if (now >= p.pauseStartDate && now <= p.pauseEndDate) {
+                    active = false;
+                }
+            } else if (!p.isAvailable && p.pauseEndDate && now > p.pauseEndDate) {
+                active = true;
+            }
+            if (active) {
+                hasActive = true;
+                break;
+            }
+        }
+
+        if (!hasActive && availableProviders.length > 0) {
+            return res.status(400).json({ message: "Currently Unavailable: No active providers at the moment." });
+        } else if (availableProviders.length === 0) {
+            return res.status(400).json({ message: "No approved providers found." });
+        }
 
         // ✅ Create booking (ONLY ONCE)
         const booking = await Booking.create({

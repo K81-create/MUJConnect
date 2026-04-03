@@ -76,9 +76,9 @@ export function CheckoutPage() {
       addConfirmedBooking(createdBooking);
       clearCart();
       navigate("/booking-confirmed");
-    } catch (error) {
+    } catch (error: any) {
       console.error("Booking failed", error);
-      alert("Failed to confirm booking. Please try again.");
+      alert(error.message || "Failed to confirm booking. Please try again.");
     }
   };
 

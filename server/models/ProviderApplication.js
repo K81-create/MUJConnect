@@ -21,6 +21,9 @@ const providerApplicationSchema = new mongoose.Schema(
             enum: ["pending", "approved", "rejected"],
             default: "pending",
         },
+        isAvailable: { type: Boolean, default: true },
+        pauseStartDate: { type: Date, default: null },
+        pauseEndDate: { type: Date, default: null },
     },
     { timestamps: true }
 );
