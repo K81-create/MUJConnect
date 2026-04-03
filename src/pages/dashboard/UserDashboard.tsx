@@ -60,11 +60,7 @@ export function UserDashboard() {
                             <div className="flex-shrink-0 flex items-center cursor-pointer" onClick={() => navigate('/')}>
                                 <span className="text-2xl font-black tracking-tighter text-black">Fix<span className="text-green-600">It</span></span>
                             </div>
-                            <div className="hidden md:flex items-center gap-1 bg-gray-100 hover:bg-gray-200 cursor-pointer px-4 py-2 rounded-lg transition-colors">
-                                <MapPin className="w-5 h-5 text-gray-500" />
-                                <span className="text-sm font-medium border-b border-dashed border-gray-400">Current Location</span>
-                                <ChevronDown className="w-4 h-4 ml-1 text-gray-500" />
-                            </div>
+
                         </div>
 
 
@@ -90,12 +86,12 @@ export function UserDashboard() {
 
             {/* Main Content Layout */}
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12">
-                
+
                 {/* 2. Hero Section */}
                 <div className="flex flex-col lg:flex-row gap-12 items-center mb-16">
                     <div className="lg:w-1/2 space-y-6">
                         <h1 className="text-4xl lg:text-6xl font-extrabold tracking-tight leading-[1.15] text-gray-900">
-                            Home services at your <br className="hidden lg:block"/><span className="text-green-600">doorstep</span>
+                            Home services at your <br className="hidden lg:block" /><span className="text-green-600">doorstep</span>
                         </h1>
                         <p className="text-lg text-gray-600 max-w-md pt-2">
                             Expert professionals, transparent pricing, and guaranteed satisfaction.
@@ -134,7 +130,7 @@ export function UserDashboard() {
                 {/* 3. Service Search Section (Main Categories) */}
                 <div className="bg-white rounded-[2rem] shadow-sm border border-gray-100 p-8 mb-16 relative">
                     <h2 className="text-3xl font-bold mb-8 text-center tracking-tight text-gray-900">What are you looking for?</h2>
-                    
+
                     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-6 justify-items-center">
                         <Link to="/services?category=women" className="group flex flex-col items-center gap-4 text-center w-full">
                             <div className="bg-pink-50 w-24 h-24 rounded-3xl flex items-center justify-center group-hover:scale-110 group-hover:shadow-md transition-all duration-300">
@@ -182,7 +178,7 @@ export function UserDashboard() {
                             <TabsTrigger value="bookings" className="rounded-xl data-[state=active]:bg-white data-[state=active]:shadow-sm px-6 py-2.5 font-bold text-sm tracking-wide">My Bookings</TabsTrigger>
                             <TabsTrigger value="profile" className="rounded-xl data-[state=active]:bg-white data-[state=active]:shadow-sm px-6 py-2.5 font-bold text-sm tracking-wide">Profile</TabsTrigger>
                         </TabsList>
-                        
+
                         <TabsContent value="bookings" className="space-y-6">
                             <div className="flex justify-between items-center bg-gray-50 p-5 rounded-2xl mb-6 shadow-inner border border-gray-100">
                                 <div className="space-y-1">
@@ -194,7 +190,7 @@ export function UserDashboard() {
                                     <p className="text-2xl font-black text-green-600">{activeServices}</p>
                                 </div>
                             </div>
-                            
+
                             {bookings.length === 0 ? (
                                 <div className="text-center py-16 bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200">
                                     <div className="bg-gray-200 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -265,10 +261,10 @@ export function UserDashboard() {
                                 </div>
                             )}
                         </TabsContent>
-                        
+
                         <TabsContent value="profile">
                             <div className="bg-gray-50 rounded-2xl p-6 border border-gray-100">
-                                <h3 className="text-lg font-bold text-gray-900 mb-6 flex items-center"><UserIcon className="w-5 h-5 mr-2 text-green-600"/> Profile Details</h3>
+                                <h3 className="text-lg font-bold text-gray-900 mb-6 flex items-center"><UserIcon className="w-5 h-5 mr-2 text-green-600" /> Profile Details</h3>
                                 <div className="space-y-6 max-w-md">
                                     <div className="grid gap-2">
                                         <label className="text-sm font-semibold tracking-wide text-gray-500 uppercase">Full Name</label>
