@@ -8,7 +8,7 @@ dns.setServers(["8.8.8.8", "8.8.4.4"]);
 import { Server } from "socket.io";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import Service from "./models/Service.js";
+import Service from "./models/service.js";
 import Booking from "./models/Booking.js";
 import ProviderApplication from "./models/ProviderApplication.js";
 import cors from "cors";
