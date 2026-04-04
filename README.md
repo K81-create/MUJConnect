@@ -8,30 +8,30 @@ MUJConnect allows users to browse services, book appointments, and manage bookin
 ## Features
 
 -  **Home Page**
-  - Hero section with call-to-action  
-  - Category grid  
-  - Featured services  
+   Hero section with call-to-action  
+   Category grid  
+   Featured services  
 
 -  **Services Listing**
-  - Tab-based category filtering  
-  - Responsive service cards  
+   Tab-based category filtering  
+   Responsive service cards  
 
 -  **Service Details**
-  - Detailed service view  
-  - Add-ons selection  
+   Detailed service view  
+   Add-ons selection  
 
 -  **Shopping Cart**
-  - Side drawer cart  
-  - Add/remove items dynamically  
+   Side drawer cart  
+   Add/remove items dynamically  
 
 -  **Checkout Flow**
-  - Address input  
-  - Date & time selection  
-  - Order summary  
+   Address input  
+   Date & time selection  
+   Order summary  
 
 -  **Responsive Design**
-  - Mobile-first approach  
-  - Optimized for all devices  
+   Mobile-first approach  
+   Optimized for all devices  
 
 ---
 
