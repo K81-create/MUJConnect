@@ -19,7 +19,7 @@ export default function Chatbot() {
 
     // 🔹 Call backend
     const sendMessage = async (message) => {
-        const res = await fetch("http://localhost:5000/api/chat", {
+        const res = await fetch("https://mujconnect-3lj9.onrender.com/api/chat", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

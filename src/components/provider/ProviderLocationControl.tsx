@@ -63,7 +63,7 @@ const ProviderLocationControl: React.FC<Props> = ({ bookingId }) => {
     const sendLocationUpdate = async (lat: number, lng: number, currentEta: string, address: string) => {
         try {
             // 1. Send to Backend via API (Persistence)
-            await fetch(`http://localhost:5000/api/bookings/${bookingId}/location`, {
+            await fetch(`https://mujconnect-3lj9.onrender.com/api/bookings/${bookingId}/location`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ lat, lng, eta: currentEta, address })

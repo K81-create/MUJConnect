@@ -6,7 +6,7 @@ import io from "socket.io-client";
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
 
 // 🔌 Connect to backend socket server
-const socket = io("http://localhost:5000");
+const socket = io("https://mujconnect-3lj9.onrender.com");
 
 export default function LiveTrackingMap() {
   const mapRef = useRef<mapboxgl.Map | null>(null);

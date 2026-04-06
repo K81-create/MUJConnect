@@ -1,5 +1,5 @@
 
-const API_URL = 'http://localhost:5000/api';
+const API_URL = 'https://mujconnect-3lj9.onrender.com/api';
 
 export const fetchServices = async () => {
     const response = await fetch(`${API_URL}/services`);
