@@ -12,70 +12,102 @@ export interface User {
 interface AuthContextType {
     user: User | null;
     isAuthenticated: boolean;
-    login: (email: string, role: UserRole) => Promise<void>;
-    register: (name: string, email: string, role: UserRole) => Promise<void>;
+    login: (email: string, password: string, role: UserRole) => Promise<void>;
+    register: (name: string, email: string, password: string, role: UserRole) => Promise<void>;
     logout: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
+// Use the same API URL pattern as client.ts
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+
 export function AuthProvider({ children }: { children: ReactNode }) {
     const [user, setUser] = useState<User | null>(null);
 
-    const generateId = (email: string) => {
-        let hash = 0;
-        for (let i = 0; i < email.length; i++) {
-            const char = email.charCodeAt(i);
-            hash = (hash << 5) - hash + char;
-            hash = hash & hash; // Convert to 32bit integer
+    const login = async (email: string, password: string, role: UserRole) => {
+        const response = await fetch(`${API_URL}/auth/login`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password, role }),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.message || 'Login failed');
         }
-        return "user_" + Math.abs(hash).toString(36);
+
+        // Store JWT token securely
+        localStorage.setItem('urban_token', data.token);
+        localStorage.setItem('urban_auth', JSON.stringify(data.user));
+        setUser(data.user);
     };
 
-    const login = async (email: string, role: UserRole) => {
-        // Mock login delay
-        await new Promise((resolve) => setTimeout(resolve, 500));
+    const register = async (name: string, email: string, password: string, role: UserRole) => {
+        const response = await fetch(`${API_URL}/auth/register`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, email, password, role }),
+        });
 
-        // Create mock user based on role with deterministic ID
-        const mockUser: User = {
-            id: generateId(email),
-            name: email.split('@')[0] || 'User',
-            email,
-            role,
-        };
+        const data = await response.json();
 
-        setUser(mockUser);
-        localStorage.setItem('urban_auth', JSON.stringify(mockUser));
-    };
+        if (!response.ok) {
+            throw new Error(data.message || 'Registration failed');
+        }
 
-    const register = async (name: string, email: string, role: UserRole) => {
-        await new Promise((resolve) => setTimeout(resolve, 500));
-        const mockUser: User = {
-            id: generateId(email),
-            name,
-            email,
-            role,
-        };
-        setUser(mockUser);
-        localStorage.setItem('urban_auth', JSON.stringify(mockUser));
+        // Store JWT token securely
+        localStorage.setItem('urban_token', data.token);
+        localStorage.setItem('urban_auth', JSON.stringify(data.user));
+        setUser(data.user);
     };
 
     const logout = () => {
         setUser(null);
         localStorage.removeItem('urban_auth');
+        localStorage.removeItem('urban_token');
     };
 
-    // Restore session on load
+    // Restore session on load — validate token with backend
     React.useEffect(() => {
-        const stored = localStorage.getItem('urban_auth');
-        if (stored) {
-            try {
-                setUser(JSON.parse(stored));
-            } catch (e) {
-                console.error("Failed to parse stored user", e);
+        const restoreSession = async () => {
+            const token = localStorage.getItem('urban_token');
+            if (!token) {
+                // Also clear any stale user data
                 localStorage.removeItem('urban_auth');
+                return;
             }
-        }
+
+            try {
+                const response = await fetch(`${API_URL}/auth/me`, {
+                    headers: { Authorization: `Bearer ${token}` },
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    setUser(data.user);
+                    localStorage.setItem('urban_auth', JSON.stringify(data.user));
+                } else {
+                    // Token is invalid or expired — clear everything
+                    localStorage.removeItem('urban_auth');
+                    localStorage.removeItem('urban_token');
+                }
+            } catch {
+                // Network error — fall back to cached user for offline resilience
+                const stored = localStorage.getItem('urban_auth');
+                if (stored) {
+                    try {
+                        setUser(JSON.parse(stored));
+                    } catch {
+                        localStorage.removeItem('urban_auth');
+                        localStorage.removeItem('urban_token');
+                    }
+                }
+            }
+        };
+
+        restoreSession();
     }, []);
 
     return (

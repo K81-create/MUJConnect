@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ArrowLeft, User, Mail, Lock, Loader2 } from "lucide-react";
+import { ArrowLeft, User, Mail, Lock, Loader2, AlertCircle } from "lucide-react";
 
 export function RegisterPage() {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -25,6 +25,7 @@ export function RegisterPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState("");
 
     // Update URL when role changes
     useEffect(() => {
@@ -56,12 +57,21 @@ export function RegisterPage() {
 
     const handleRegister = async (e: React.FormEvent) => {
         e.preventDefault();
+        setError("");
+
+        // Client-side validation
+        if (password.length < 6) {
+            setError("Password must be at least 6 characters");
+            return;
+        }
+
         setLoading(true);
         try {
-            await register(name, email, role);
+            await register(name, email, password, role);
             navigate(dashboardMap[role]);
-        } catch (error) {
+        } catch (error: any) {
             console.error("Registration failed", error);
+            setError(error.message || "Registration failed. Please try again.");
         } finally {
             setLoading(false);
         }
@@ -97,6 +107,12 @@ export function RegisterPage() {
                     </CardHeader>
                     <form onSubmit={handleRegister}>
                         <CardContent className="space-y-4 pt-0">
+                            {error && (
+                                <div className="flex items-center gap-2 p-3 rounded-lg bg-red-50 border border-red-200 text-red-700 text-sm">
+                                    <AlertCircle className="h-4 w-4 flex-shrink-0" />
+                                    <span>{error}</span>
+                                </div>
+                            )}
                             <div className="space-y-2">
                                 <Label htmlFor="name" className="text-slate-700">Full Name</Label>
                                 <div className="relative">
@@ -106,7 +122,7 @@ export function RegisterPage() {
                                         placeholder="John Doe"
                                         className="pl-10 h-10 border-slate-200 focus:border-blue-500 focus:ring-blue-500"
                                         value={name}
-                                        onChange={(e) => setName(e.target.value)}
+                                        onChange={(e) => { setName(e.target.value); setError(""); }}
                                         required
                                     />
                                 </div>
@@ -121,7 +137,7 @@ export function RegisterPage() {
                                         placeholder="name@example.com"
                                         className="pl-10 h-10 border-slate-200 focus:border-blue-500 focus:ring-blue-500"
                                         value={email}
-                                        onChange={(e) => setEmail(e.target.value)}
+                                        onChange={(e) => { setEmail(e.target.value); setError(""); }}
                                         required
                                     />
                                 </div>
@@ -133,13 +149,15 @@ export function RegisterPage() {
                                     <Input
                                         id="password"
                                         type="password"
-                                        placeholder="Create a strong password"
+                                        placeholder="Create a strong password (min. 6 chars)"
                                         className="pl-10 h-10 border-slate-200 focus:border-blue-500 focus:ring-blue-500"
                                         value={password}
-                                        onChange={(e) => setPassword(e.target.value)}
+                                        onChange={(e) => { setPassword(e.target.value); setError(""); }}
                                         required
+                                        minLength={6}
                                     />
                                 </div>
+                                <p className="text-xs text-slate-400">Must be at least 6 characters</p>
                             </div>
                         </CardContent>
                         <CardFooter className="flex flex-col gap-4 pt-4">
@@ -170,7 +188,7 @@ export function RegisterPage() {
                 </Card>
 
                 <p className="text-center text-xs text-slate-400">
-                    &copy; 2024 Urban Home Services. Terms & Privacy.
+                    &copy; 2024 Urban Home Services. Terms &amp; Privacy.
                 </p>
             </div>
         </div>

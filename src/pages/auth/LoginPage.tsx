@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ArrowLeft, Mail, Lock, Loader2 } from "lucide-react";
+import { ArrowLeft, Mail, Lock, Loader2, AlertCircle } from "lucide-react";
 
 export function LoginPage() {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -19,6 +19,7 @@ export function LoginPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState("");
 
     // Update URL when role changes to keep bookmarkable state
     useEffect(() => {
@@ -39,12 +40,14 @@ export function LoginPage() {
 
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
+        setError("");
         setLoading(true);
         try {
-            await login(email, role);
+            await login(email, password, role);
             navigate(dashboardMap[role]);
-        } catch (error) {
+        } catch (error: any) {
             console.error("Login failed", error);
+            setError(error.message || "Login failed. Please check your credentials.");
         } finally {
             setLoading(false);
         }
@@ -81,6 +84,12 @@ export function LoginPage() {
                     </CardHeader>
                     <form onSubmit={handleLogin}>
                         <CardContent className="space-y-4 pt-0">
+                            {error && (
+                                <div className="flex items-center gap-2 p-3 rounded-lg bg-red-50 border border-red-200 text-red-700 text-sm">
+                                    <AlertCircle className="h-4 w-4 flex-shrink-0" />
+                                    <span>{error}</span>
+                                </div>
+                            )}
                             <div className="space-y-2">
                                 <Label htmlFor="email" className="text-slate-700">Email Address</Label>
                                 <div className="relative">
@@ -91,7 +100,7 @@ export function LoginPage() {
                                         placeholder="name@example.com"
                                         className="pl-10 h-10 border-slate-200 focus:border-blue-500 focus:ring-blue-500"
                                         value={email}
-                                        onChange={(e) => setEmail(e.target.value)}
+                                        onChange={(e) => { setEmail(e.target.value); setError(""); }}
                                         required
                                     />
                                 </div>
@@ -106,7 +115,7 @@ export function LoginPage() {
                                         placeholder="••••••••"
                                         className="pl-10 h-10 border-slate-200 focus:border-blue-500 focus:ring-blue-500"
                                         value={password}
-                                        onChange={(e) => setPassword(e.target.value)}
+                                        onChange={(e) => { setPassword(e.target.value); setError(""); }}
                                         required
                                     />
                                 </div>
@@ -142,7 +151,7 @@ export function LoginPage() {
                 </Card>
 
                 <p className="text-center text-xs text-slate-400">
-                    &copy; 2024 Urban Home Services. Secure & Encrypted.
+                    &copy; 2024 Urban Home Services. Secure &amp; Encrypted.
                 </p>
             </div>
         </div>

@@ -168,6 +168,10 @@ app.post("/api/providers", async (req, res) => {
     }
 });
 
+// Auth routes
+import authRoutes from "./routes/authRoutes.js";
+app.use("/api/auth", authRoutes);
+
 // Socket.IO
 import providerRoutes from "./routes/providerRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
