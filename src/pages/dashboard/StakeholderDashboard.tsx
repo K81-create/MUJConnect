@@ -72,7 +72,7 @@ export function StakeholderDashboard() {
     useEffect(() => {
         if (user?.email) {
             setIsLoadingProfile(true);
-            fetch(`http://localhost:5000/api/provider/status/${user.email}`)
+            fetch(`https://mujconnect-3lj9.onrender.com/api/provider/status/${user.email}`)
                 .then(res => {
                     if (res.ok) return res.json();
                     return null;
@@ -102,7 +102,7 @@ export function StakeholderDashboard() {
     }, [user?.email]);
 
     const fetchBookingsForProvider = (providerName: string) => {
-        fetch(`http://localhost:5000/api/bookings/provider/${encodeURIComponent(providerName)}`)
+        fetch(`https://mujconnect-3lj9.onrender.com/api/bookings/provider/${encodeURIComponent(providerName)}`)
             .then(res => res.json())
             .then(data => {
                 setLocalBookings(data);
@@ -178,7 +178,7 @@ export function StakeholderDashboard() {
 
     useEffect(() => {
         if (profile?.status === 'approved') {
-            fetch('http://localhost:5000/api/bookings/pending')
+            fetch('https://mujconnect-3lj9.onrender.com/api/bookings/pending')
                 .then(res => res.json())
                 .then(data => {
                     if (Array.isArray(data)) {
@@ -236,7 +236,7 @@ export function StakeholderDashboard() {
         };
 
         try {
-            const res = await fetch('http://localhost:5000/api/provider/register', {
+            const res = await fetch('https://mujconnect-3lj9.onrender.com/api/provider/register', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)
@@ -272,7 +272,7 @@ export function StakeholderDashboard() {
     const saveServicesToBackend = async (newServices: ServiceItem[]) => {
         if (!profile) return;
         try {
-            const res = await fetch(`http://localhost:5000/api/provider/${profile._id}/services`, {
+            const res = await fetch(`https://mujconnect-3lj9.onrender.com/api/provider/${profile._id}/services`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ services: newServices })
@@ -322,7 +322,7 @@ export function StakeholderDashboard() {
         if (status === "assigned") {
             if (profile) {
                 try {
-                    const res = await fetch(`http://localhost:5000/api/bookings/${id}/assign`, {
+                    const res = await fetch(`https://mujconnect-3lj9.onrender.com/api/bookings/${id}/assign`, {
                         method: 'PUT',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ providerName: profile.personalDetails.name })
@@ -371,7 +371,7 @@ export function StakeholderDashboard() {
     const toggleAvailability = async () => {
         if (!profile) return;
         try {
-            const res = await fetch(`http://localhost:5000/api/provider/availability/${profile._id}`, {
+            const res = await fetch(`https://mujconnect-3lj9.onrender.com/api/provider/availability/${profile._id}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ isAvailable: !profile.isAvailable })
@@ -388,7 +388,7 @@ export function StakeholderDashboard() {
     const handleSchedulePause = async (startDate: string, endDate: string) => {
         if (!profile) return;
         try {
-            const res = await fetch(`http://localhost:5000/api/provider/pause-service`, {
+            const res = await fetch(`https://mujconnect-3lj9.onrender.com/api/provider/pause-service`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ providerId: profile._id, startDate, endDate })
@@ -408,7 +408,7 @@ export function StakeholderDashboard() {
     const handleProfileUpdate = async (updatedData: any) => {
         if (!profile) return;
         try {
-            const res = await fetch(`http://localhost:5000/api/provider/${profile._id}/details`, {
+            const res = await fetch(`https://mujconnect-3lj9.onrender.com/api/provider/${profile._id}/details`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(updatedData)

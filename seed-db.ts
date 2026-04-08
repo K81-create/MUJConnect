@@ -1,9 +1,10 @@
 
 import { services, categories } from './src/data/services';
 
+
 const seed = async () => {
     try {
-        const response = await fetch('http://localhost:5000/api/seed', {
+        const response = await fetch('https://mujconnect-3lj9.onrender.com/api/seed', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

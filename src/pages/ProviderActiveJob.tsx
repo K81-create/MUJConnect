@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Send, MapPin, CheckCircle2 } from "lucide-react";
 
-const SOCKET_URL = "http://localhost:5000";
+const SOCKET_URL = "https://mujconnect-3lj9.onrender.com";
 
 export default function ProviderActiveJob() {
   const { bookingId } = useParams<{ bookingId: string }>();
@@ -23,7 +23,7 @@ export default function ProviderActiveJob() {
 
     const fetchBookingData = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/api/bookings/${bookingId}`);
+        const res = await fetch(`https://mujconnect-3lj9.onrender.com/api/bookings/${bookingId}`);
         if (!res.ok) return;
 
         const data = await res.json();

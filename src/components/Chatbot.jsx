@@ -44,7 +44,7 @@ export default function Chatbot() {
         setLoading(true);
 
         try {
-            const res = await fetch("http://localhost:5000/api/providers", {
+            const res = await fetch("https://mujconnect-3lj9.onrender.com/api/providers", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

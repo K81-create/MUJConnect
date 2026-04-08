@@ -20,7 +20,7 @@ const ProviderChat: React.FC<Props> = ({ bookingId }) => {
 
         const fetchHistory = async () => {
             try {
-                const res = await fetch(`http://localhost:5000/api/bookings/${bookingId}`);
+                const res = await fetch(`https://mujconnect-3lj9.onrender.com/api/bookings/${bookingId}`);
                 if (res.ok) {
                     const data = await res.json();
                     if (data?.messages) {

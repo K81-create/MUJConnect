@@ -57,14 +57,14 @@ export function AdminDashboard() {
     }, []);
 
     const fetchRequests = () => {
-        fetch('http://localhost:5000/api/admin/requests')
+        fetch('https://mujconnect-3lj9.onrender.com/api/admin/requests')
             .then(res => res.json())
             .then(setProviderRequests)
             .catch(console.error);
     };
 
     const fetchProviders = () => {
-        fetch('http://localhost:5000/api/admin/providers')
+        fetch('https://mujconnect-3lj9.onrender.com/api/admin/providers')
             .then(res => res.json())
             .then(setActiveProviders)
             .catch(console.error);
@@ -74,7 +74,7 @@ export function AdminDashboard() {
         const providerName = prompt("Enter Provider Name (Simulated Selection):", "John Service");
         if (providerName) {
             try {
-                const res = await fetch(`http://localhost:5000/api/bookings/${bookingId}/assign`, {
+                const res = await fetch(`https://mujconnect-3lj9.onrender.com/api/bookings/${bookingId}/assign`, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ providerName })
@@ -102,7 +102,7 @@ export function AdminDashboard() {
     // Provider Actions
     const handleApproveProvider = async (id: string) => {
         try {
-            const res = await fetch(`http://localhost:5000/api/admin/request/${id}`, {
+            const res = await fetch(`https://mujconnect-3lj9.onrender.com/api/admin/request/${id}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ status: 'approved' })
@@ -122,7 +122,7 @@ export function AdminDashboard() {
 
     const handleRejectProvider = async (id: string, reason: string) => {
         try {
-            const res = await fetch(`http://localhost:5000/api/admin/request/${id}`, {
+            const res = await fetch(`https://mujconnect-3lj9.onrender.com/api/admin/request/${id}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ status: 'rejected', rejectionReason: reason })
@@ -138,7 +138,7 @@ export function AdminDashboard() {
 
     const handleToggleProviderStatus = async (id: string, currentStatus: boolean) => {
         try {
-            const res = await fetch(`http://localhost:5000/api/provider/availability/${id}`, {
+            const res = await fetch(`https://mujconnect-3lj9.onrender.com/api/provider/availability/${id}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ isAvailable: !currentStatus })

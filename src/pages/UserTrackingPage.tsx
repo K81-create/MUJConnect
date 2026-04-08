@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Clock, MapPin, Phone, Send } from "lucide-react";
 
-const SOCKET_URL = "http://localhost:5000";
+const SOCKET_URL = "https://mujconnect-3lj9.onrender.com";
 
 interface Location {
   lat: number;
@@ -52,7 +52,7 @@ const UserTrackingPage: React.FC = () => {
 
     const fetchBookingData = async () => {
       try {
-        const bookingRes = await fetch(`http://localhost:5000/api/bookings/${bookingId}`);
+        const bookingRes = await fetch(`https://mujconnect-3lj9.onrender.com/api/bookings/${bookingId}`);
         if (!bookingRes.ok) return;
 
         const bookingData = await bookingRes.json();

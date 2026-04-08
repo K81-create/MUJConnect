@@ -30,7 +30,7 @@ export function OrderTrackingPage() {
     const [socketStatus, setSocketStatus] = useState("Connecting...");
 
     useEffect(() => {
-        const socket = io("http://localhost:5000", {
+        const socket = io("https://mujconnect-3lj9.onrender.com", {
             transports: ["websocket"],
         });
 
