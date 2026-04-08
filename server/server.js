@@ -19,14 +19,33 @@ dotenv.config();
 const app = express();
 const server = http.createServer(app);
 
-// ✅ FIX CORS (frontend port)
-app.use(
-    cors({
-        origin: "http://localhost:5173",
-        methods: ["GET", "POST", "PUT", "DELETE"],
-        credentials: true,
-    })
-);
+// ✅ CORS origins — covers localhost dev + all Vercel deployments
+const ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+    "http://localhost:5174",
+    "https://mujconnect-eight.vercel.app",      // replace with your actual Vercel URL
+    /\.vercel\.app$/,                     // allow all vercel preview URLs automatically
+];
+
+const corsOptions = {
+    origin: function (origin, callback) {
+        // Allow requests with no origin (mobile apps, Postman, server-to-server)
+        if (!origin) return callback(null, true);
+        const allowed = ALLOWED_ORIGINS.some((o) =>
+            typeof o === "string" ? o === origin : o.test(origin)
+        );
+        if (allowed) {
+            callback(null, true);
+        } else {
+            console.warn("❌ CORS blocked for origin:", origin);
+            callback(new Error("Not allowed by CORS"));
+        }
+    },
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+};
+
+app.use(cors(corsOptions));
 
 app.use(express.json());
 
@@ -158,8 +177,19 @@ app.use("/api/admin", adminRoutes);
 
 export const io = new Server(server, {
     cors: {
-        origin: "http://localhost:5173",
+        origin: function (origin, callback) {
+            if (!origin) return callback(null, true);
+            const allowed = ALLOWED_ORIGINS.some((o) =>
+                typeof o === "string" ? o === origin : o.test(origin)
+            );
+            if (allowed) {
+                callback(null, true);
+            } else {
+                callback(new Error("Socket.IO: Not allowed by CORS"));
+            }
+        },
         methods: ["GET", "POST"],
+        credentials: true,
     },
 });
 
