@@ -25,6 +25,9 @@ const ALLOWED_ORIGINS = [
     "http://localhost:5174",
     "https://mujconnect-eight.vercel.app",      // replace with your actual Vercel URL
     /\.vercel\.app$/,                     // allow all vercel preview URLs automatically
+    /\.github\.io$/,                      // allow github pages
+    /\.netlify\.app$/,                    // allow netlify
+    /\.onrender\.com$/,                   // allow render frontend testing
 ];
 
 const corsOptions = {
