@@ -84,6 +84,30 @@ const UserTrackingPage: React.FC = () => {
             return;
           }
 
+          // ✅ Intercept known local addresses (MUJ Area) for accurate mapping
+          const normalizedAddress = bookingData.address.toLowerCase().trim();
+          const KNOWN_LOCATIONS: Record<string, Location> = {
+            "sankalp tatvam": { lat: 26.86, lng: 75.64 },
+            "manipal university": { lat: 26.843, lng: 75.565 },
+            "muj": { lat: 26.843, lng: 75.565 },
+            "dehmi kalan": { lat: 26.835, lng: 75.555 },
+            "bagru": { lat: 26.814, lng: 75.545 },
+          };
+
+          let knownMatch = null;
+          for (const [key, loc] of Object.entries(KNOWN_LOCATIONS)) {
+            if (normalizedAddress.includes(key)) {
+              knownMatch = loc;
+              break;
+            }
+          }
+
+          if (knownMatch) {
+            console.log("📍 Using known local coordinate for:", bookingData.address);
+            setUserLocation(knownMatch);
+            return; // Skip Mapbox fetch
+          }
+
           // Better search address: Try removing descriptive prefixes like "Near" and extra punctuation
           let searchAddress = bookingData.address.replace(/Near /gi, '').trim();
           if (!searchAddress.toLowerCase().includes("india")) {

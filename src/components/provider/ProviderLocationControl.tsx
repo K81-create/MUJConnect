@@ -87,9 +87,32 @@ const ProviderLocationControl: React.FC<Props> = ({ bookingId }) => {
         setIsUpdating(true);
 
         try {
-            // Geocode the address to get coords (using Mapbox via client or just mock for now if no token available here, 
-            // but ideally we use the token from env).
-            // Since I need to be quick and likely have the token available:
+            // ✅ Intercept known local addresses (MUJ Area) for accurate mapping
+            const normalizedAddress = manualAddress.toLowerCase().trim();
+            const KNOWN_LOCATIONS: Record<string, {lat: number, lng: number}> = {
+                "sankalp tatvam": { lat: 26.86, lng: 75.64 },
+                "manipal university": { lat: 26.843, lng: 75.565 },
+                "muj": { lat: 26.843, lng: 75.565 },
+                "dehmi kalan": { lat: 26.835, lng: 75.555 },
+                "bagru": { lat: 26.814, lng: 75.545 },
+            };
+
+            let knownMatch = null;
+            for (const [key, loc] of Object.entries(KNOWN_LOCATIONS)) {
+                if (normalizedAddress.includes(key)) {
+                    knownMatch = loc;
+                    break;
+                }
+            }
+
+            if (knownMatch) {
+                await sendLocationUpdate(knownMatch.lat, knownMatch.lng, eta, manualAddress);
+                alert("Location & ETA Updated! (using known coordinates)");
+                setIsUpdating(false);
+                return;
+            }
+
+            // Geocode the address to get coords
             const token = import.meta.env.VITE_MAPBOX_TOKEN;
             if (!token) {
                 alert("Mapbox token missing");
