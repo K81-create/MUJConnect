@@ -66,6 +66,17 @@ Built with a clean UI, responsive design, and scalable architecture, MUJConnect 
 
 ```bash
 git clone https://github.com/K81-create/MUJConnect.git
-cd MUJConnect
 npm install
+```
+
+## Run frontend
+```bash
 npm run dev
+```
+
+## Run Backend
+```bash
+cd server
+npm install   # run this once if not done
+node server.js
+```
