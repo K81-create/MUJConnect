@@ -169,7 +169,7 @@ const TrackingMap: React.FC<TrackingMapProps> = ({ userLocation, providerLocatio
         }
 
         const res = await fetch(
-          `https://api.mapbox.com/directions/v5/mapbox/driving/${providerLocation.lng},${providerLocation.lat};${userLocation.lng},${userLocation.lat}?geometries=geojson&access_token=${mapboxgl.accessToken}`
+          `https://api.mapbox.com/directions/v5/mapbox/driving/${providerLocation.lng},${providerLocation.lat};${userLocation.lng},${userLocation.lat}?geometries=geojson&overview=full&steps=false&continue_straight=true&access_token=${mapboxgl.accessToken}`
         );
 
         const json = await res.json();
