@@ -62,6 +62,11 @@ Built with a clean UI, responsive design, and scalable architecture, MUJConnect 
 
 ---
 
+## Live URL
+```bash
+https://mujconnect-eight.vercel.app/
+```
+ 
 ## 📦 Installation
 
 ```bash
