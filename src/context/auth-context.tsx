@@ -20,7 +20,8 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 // Use the same API URL pattern as client.ts
-const API_URL = import.meta.env.VITE_API_URL || 'https://mujconnect-3lj9.onrender.com/api';
+const _baseURL = import.meta.env.VITE_API_URL || 'https://mujconnect-3lj9.onrender.com/api';
+const API_URL = _baseURL.endsWith('/api') ? _baseURL : `${_baseURL}/api`;
 
 export function AuthProvider({ children }: { children: ReactNode }) {
     const [user, setUser] = useState<User | null>(null);

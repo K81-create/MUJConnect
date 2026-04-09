@@ -1,5 +1,6 @@
 
-const API_URL = import.meta.env.VITE_API_URL || 'https://mujconnect-3lj9.onrender.com/api';
+const _baseURL = import.meta.env.VITE_API_URL || 'https://mujconnect-3lj9.onrender.com/api';
+const API_URL = _baseURL.endsWith('/api') ? _baseURL : `${_baseURL}/api`;
 
 export const fetchServices = async () => {
     const response = await fetch(`${API_URL}/services`);

@@ -14,6 +14,7 @@ import ProviderApplication from "./models/providerapplication.js";
 dotenv.config({ path: __dirname + "/../.env" });
 
 import locationRoutes from './routes/location';
+import authRoutes from '../routes/authRoutes.js';
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -295,6 +296,10 @@ app.get('/api/bookings/provider/:name', async (req, res) => {
         res.status(500).json({ message: 'Error fetching provider bookings' });
     }
 });
+
+// --- AUTH ROUTES ---
+app.use('/auth', authRoutes);
+app.use('/api/auth', authRoutes);
 
 // --- LOCATION ROUTES ---
 app.use('/api/location', locationRoutes);
