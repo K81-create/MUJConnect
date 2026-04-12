@@ -245,7 +245,7 @@ export function AdminDashboard() {
                                                     {booking.items?.[0]?.serviceName || "Service"}
                                                     {booking.items?.length > 1 && ` +${booking.items.length - 1} more`}
                                                 </td>
-                                                <td className="p-4">Guest User</td> {/* Auth not fully linked to ID yet */}
+                                                <td className="p-4">{booking.customerName || "Guest User"}</td>
                                                 <td className="p-4">
                                                     {booking.date ? format(new Date(booking.date), "MMM d") : "N/A"} at {booking.time}
                                                 </td>
