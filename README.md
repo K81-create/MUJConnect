@@ -1,6 +1,6 @@
-# 🌐 MUJConnect — Urban Home Services Platform
+# 🌐 MUJConnect — A Localised Home Services Booking Platform
 
-A modern, production-ready web application inspired by Urban Company that allows users to discover, book, and manage home services seamlessly.
+A modern, production-ready web application that allows users to discover, book, and manage home services seamlessly.
 
 Built with a clean UI, responsive design, and scalable architecture, MUJConnect delivers a smooth booking experience from service discovery to checkout.
 
@@ -62,10 +62,26 @@ Built with a clean UI, responsive design, and scalable architecture, MUJConnect 
 
 ---
 
+## Live URL
+```bash
+https://mujconnect-eight.vercel.app/
+```
+ 
 ## 📦 Installation
 
 ```bash
 git clone https://github.com/K81-create/MUJConnect.git
-cd MUJConnect
 npm install
+```
+
+## Run frontend
+```bash
 npm run dev
+```
+
+## Run Backend
+```bash
+cd server
+npm install   # run this once if not done
+node server.js
+```
